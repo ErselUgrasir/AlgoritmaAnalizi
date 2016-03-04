@@ -12,7 +12,7 @@
 
 $try = 0;
 
-$elemanSayisi = 1000;
+$elemanSayisi = 100000;
 
 $maxNumber = $elemanSayisi;
 
@@ -20,10 +20,10 @@ $myArray = createArray($elemanSayisi);
 
 for ($i=0; $i < 100; $i++) { 
 
-	$arananSayi = rand(1,$maxNumber);
+	$arananSayi = rand(1,$maxNumber + 10 * $i);
 
 	// $result değeri için kullanilabilir fonksiyonlar : 'linearSearch' ve 'binarySearch'
-	$result = linearSearch($myArray,$arananSayi);
+	$result = binarySearch($myArray,$arananSayi);
 
 	if ($result == -1) {
 
@@ -41,7 +41,23 @@ for ($i=0; $i < 100; $i++) {
 
 function binarySearch($myArray,$number){
 
+	$left = 0;
+    $right = count($myArray) - 1;
 
+    while ($left <= $right) {
+        $mid = ($left + $right) / 2;
+		$GLOBALS["try"]++;
+
+        if ($myArray[$mid] == $number) {
+            return $GLOBALS["try"];
+        } elseif ($myArray[$mid] > $number) {
+            $right = $mid - 1;
+        } elseif ($myArray[$mid] < $number) {
+            $left = $mid + 1;
+        }
+    }
+
+    return -1;
 
 }
 
